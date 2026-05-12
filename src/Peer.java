@@ -24,7 +24,8 @@ public class Peer {
 
 
 	public void connectToPeer(String host, int port) throws IOException {
-		try (Socket socket = new Socket(host, port);
+		//try (Socket socket = new Socket(host, port);
+		try (Socket socket = new Socket(InetAddress.getByName(host), port);
 		PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 		BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 			out.println("Hello form Peer on port " + this.port);
@@ -44,10 +45,12 @@ public class Peer {
 		int port = Integer.parseInt(args[0]);
 		try {
 			Peer peer = new Peer(port);
+			String address = IO.readln("Digite o endereço: ");
+
 			//peer.start();
 			if (port == 5000) {
 				System.out.println("COnnecting");
-				peer.connectToPeer("localhost", 5001);
+				peer.connectToPeer(address, 5001);
 			} else {
 				peer.start();
 			}
